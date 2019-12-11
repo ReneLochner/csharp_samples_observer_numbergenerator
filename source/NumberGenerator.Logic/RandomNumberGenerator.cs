@@ -24,6 +24,9 @@ namespace NumberGenerator.Logic
 
         #region Fields
 
+        private int _delay;
+        private int _seed;
+        private List<IObserver> _attachedObservers = new List<IObserver>();
 
         #endregion
 
@@ -42,6 +45,7 @@ namespace NumberGenerator.Logic
         /// <param name="delay">Enthält die Zeit zw. zwei Generierungen in Millisekunden.</param>
         public RandomNumberGenerator(int delay) : this(delay, DEFAULT_SEED)
         {
+            this._delay = delay;
         }
 
         /// <summary>
@@ -51,6 +55,8 @@ namespace NumberGenerator.Logic
         /// <param name="seed">Enthält die Initialisierung der Zufallszahlengenerierung.</param>
         public RandomNumberGenerator(int delay, int seed)
         {
+            this._delay = delay;
+            this._seed = seed;
         }
 
         #endregion
@@ -65,7 +71,15 @@ namespace NumberGenerator.Logic
         /// <param name="observer">Der Beobachter, welcher benachricht werden möchte.</param>
         public void Attach(IObserver observer)
         {
-            throw new NotImplementedException();
+            if(observer == null)
+            {
+                throw new ArgumentNullException("ArgumentNullException was expected!");
+            }
+            if(_attachedObservers.Contains(observer))
+            {
+                throw new InvalidOperationException("InvalidOperationException was expected");
+            }
+            _attachedObservers.Add(observer);
         }
 
         /// <summary>
@@ -74,7 +88,15 @@ namespace NumberGenerator.Logic
         /// <param name="observer">Der Beobachter, welcher nicht mehr benachrichtigt werden möchte</param>
         public void Detach(IObserver observer)
         {
-            throw new NotImplementedException();
+            if (observer == null)
+            {
+                throw new ArgumentNullException("ArgumentNullException was expected!");
+            }
+            if(!_attachedObservers.Contains(observer))
+            {
+                throw new InvalidOperationException("InvalidOperationException was expected!");
+            }
+            _attachedObservers.Remove(observer);
         }
 
         /// <summary>
@@ -83,7 +105,7 @@ namespace NumberGenerator.Logic
         /// <param name="number">Die generierte Zahl.</param>
         public void NotifyObservers(int number)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(number);
         }
 
         #endregion
@@ -99,7 +121,8 @@ namespace NumberGenerator.Logic
         /// </summary>
         public void StartNumberGeneration()
         {
-            throw new NotImplementedException();
+            int generatedNumber = new Random().Next(RANDOM_MIN_VALUE, RANDOM_MAX_VALUE);
+            this.NotifyObservers(generatedNumber);
         }
 
         #endregion

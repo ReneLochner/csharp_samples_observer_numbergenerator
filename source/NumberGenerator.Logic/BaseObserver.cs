@@ -20,13 +20,17 @@ namespace NumberGenerator.Logic
         public int CountOfNumbersReceived { get; private set; }
         public int CountOfNumbersToWaitFor { get; private set; }
 
+        public int[] _generatedNumbers;
+
         #endregion
 
         #region Constructors
 
         public BaseObserver(IObservable numberGenerator, int countOfNumbersToWaitFor)
         {
-            throw new NotImplementedException();
+            this._numberGenerator = numberGenerator;
+            this.CountOfNumbersToWaitFor = countOfNumbersToWaitFor;
+            this._numberGenerator.Attach(this);
         }
 
         #endregion
@@ -63,7 +67,7 @@ namespace NumberGenerator.Logic
 
         protected void DetachFromNumberGenerator()
         {
-            throw new NotImplementedException();
+            this._numberGenerator.Detach(this);
         }
 
         #endregion

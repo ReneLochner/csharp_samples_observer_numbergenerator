@@ -37,7 +37,9 @@ namespace NumberGenerator.Logic
 
         public RangeObserver(IObservable numberGenerator, int numberOfHitsToWaitFor, int lowerRange, int upperRange) : base(numberGenerator, int.MaxValue)
         {
-            throw new NotImplementedException();
+            this.NumbersOfHitsToWaitFor = numberOfHitsToWaitFor;
+            this.LowerRange = lowerRange;
+            this.UpperRange = upperRange;
         }
 
         #endregion

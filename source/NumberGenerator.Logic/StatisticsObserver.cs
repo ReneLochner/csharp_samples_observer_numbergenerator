@@ -31,7 +31,7 @@ namespace NumberGenerator.Logic
         /// <summary>
         /// Enthält den Durchschnitt der generierten Zahlen.
         /// </summary>
-        public int Avg => throw new NotImplementedException();
+        public int Avg => Sum / _generatedNumbers.Length;
 
         #endregion
 
@@ -39,7 +39,11 @@ namespace NumberGenerator.Logic
 
         public StatisticsObserver(IObservable numberGenerator, int countOfNumbersToWaitFor) : base(numberGenerator, countOfNumbersToWaitFor)
         {
-            throw new NotImplementedException();
+            if(countOfNumbersToWaitFor < 0)
+            {
+                throw new ArgumentException("ArgumentException was expected!");
+            }
+            this._generatedNumbers = new int[countOfNumbersToWaitFor];
         }
 
         #endregion
